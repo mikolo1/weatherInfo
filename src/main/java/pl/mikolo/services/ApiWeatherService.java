@@ -1,5 +1,8 @@
 package pl.mikolo.services;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -14,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ApiWeatherService {
 
     private RestTemplate restTemplate;
@@ -38,12 +42,12 @@ public class ApiWeatherService {
                         .filter(element -> element.getValue().getUploadDateTime().isAfter(LocalDateTime.now().minusMinutes(60)))
                         .map(Map.Entry::getValue).findFirst();
         if (foundedData.isPresent()) {
-            System.out.println("pogoda z mapy");
+            log.info("Rekord załadowany z pamięci, czas załadowania: {}, temperatura: {} ",foundedData.get().getUploadDateTime(), foundedData.get().getMain().getTemp());
             return foundedData.get();
         } else {
             WeatherModel weatherModel = getWeatherModel(id);
             weatherDataMap.put(id, weatherModel);
-            System.out.println("pogoda z API");
+            log.info("Rekord załadowany z API, czasa załadowania: {}, temperatura: {} ",weatherModel.getUploadDateTime(), weatherModel.getMain().getTemp());
             return weatherModel;
         }
     }
