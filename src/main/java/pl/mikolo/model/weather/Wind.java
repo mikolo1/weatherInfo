@@ -15,6 +15,6 @@ public class Wind {
     private Double speed;
     @SerializedName("deg")
     @Expose
-    private Integer deg;
+    private Double deg;
 
 }
