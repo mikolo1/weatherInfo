@@ -52,7 +52,7 @@ public class ApiWeatherService {
         }
     }
 
-    public WeatherModel getWeatherModel(long id) {
+    private WeatherModel getWeatherModel(long id) {
         String fullUrl = url.replace("{id}", String.valueOf(id)).replace("{appId}", apiKey);
         ResponseEntity<WeatherModel> weatherEntity = restTemplate.exchange(fullUrl, HttpMethod.GET, null, WeatherModel.class);
         WeatherModel wm = weatherEntity.getBody();
