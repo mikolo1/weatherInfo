@@ -35,19 +35,19 @@ public class ApiWeatherService {
     }
 
     public WeatherModel getActualWeather(long id) {
-        Optional<WeatherModel> foundedData = weatherDataMap
-                        .entrySet()
-                        .stream()
-                        .filter(e -> id == e.getKey())
-                        .filter(element -> element.getValue().getUploadDateTime().isAfter(LocalDateTime.now().minusMinutes(60)))
-                        .map(Map.Entry::getValue).findFirst();
-        if (foundedData.isPresent()) {
-            log.info("Rekord załadowany z pamięci, czas załadowania: {}, temperatura: {} ",foundedData.get().getUploadDateTime(), foundedData.get().getMain().getTemp());
-            return foundedData.get();
+        Optional<WeatherModel> inMemoryData = weatherDataMap
+                .entrySet()
+                .stream()
+                .filter(e -> id == e.getKey() && e.getValue().getUploadDateTime().isAfter(LocalDateTime.now().minusMinutes(60)))
+                .map(Map.Entry::getValue)
+                .findFirst();
+        if (inMemoryData.isPresent()) {
+            log.info("Rekord załadowany z pamięci, czas załadowania: {}, temperatura: {} ", inMemoryData.get().getUploadDateTime(), inMemoryData.get().getMain().getTemp());
+            return inMemoryData.get();
         } else {
             WeatherModel weatherModel = getWeatherModel(id);
             weatherDataMap.put(id, weatherModel);
-            log.info("Rekord załadowany z API, czasa załadowania: {}, temperatura: {} ",weatherModel.getUploadDateTime(), weatherModel.getMain().getTemp());
+            log.info("Rekord załadowany z API, czasa załadowania: {}, temperatura: {} ", weatherModel.getUploadDateTime(), weatherModel.getMain().getTemp());
             return weatherModel;
         }
     }
