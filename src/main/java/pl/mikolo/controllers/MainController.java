@@ -13,7 +13,6 @@ import pl.mikolo.model.weatherForecast.WeatherForecastModel;
 import pl.mikolo.services.IApiWeatherService;
 import pl.mikolo.services.ICityService;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 
 @Controller

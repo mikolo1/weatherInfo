@@ -27,5 +27,4 @@ public class WeatherForecastModel {
     public City city;
 
     private LocalDateTime uploadDateTime;
-
 }
