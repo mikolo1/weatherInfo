@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class CityService {
+public class CityService implements ICityService{
 
     private Gson gson;
     private CitiesRepository citiesRepository;
@@ -32,7 +32,7 @@ public class CityService {
         }.getType();
     }
 
-
+    @Override
     public List<City> findListByName(String cityName) {
         try {
             String path = "C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json";
@@ -41,25 +41,33 @@ public class CityService {
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
 
             List<City> cityList = gson.fromJson(reader, type);
-            return cityList.stream().filter(c -> c.getName().toLowerCase().contains(cityName.toLowerCase())).collect(Collectors.toList());
+            return cityList.stream()
+                    .filter(c -> c.getName().toLowerCase().contains(cityName.toLowerCase()))
+                    .collect(Collectors.toList());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         throw new NoResultException("brak miasta w pliku");
     }
 
+    @Override
     public List<City> findPageByName(String cityName, long page, long rowsOnPage) {
         try {
             String path = "C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json";
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
             List<City> cityList = gson.fromJson(reader, type);
-            return cityList.stream().filter(c -> c.getName().toLowerCase().contains(cityName.toLowerCase())).skip(page*rowsOnPage).limit(rowsOnPage).collect(Collectors.toList());
+            return cityList.stream()
+                    .filter(c -> c.getName().toLowerCase().contains(cityName.toLowerCase()))
+                    .skip(page*rowsOnPage)
+                    .limit(rowsOnPage)
+                    .collect(Collectors.toList());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         throw new NoResultException("brak miasta w pliku");
     }
 
+    @Override
     public City findById(Long id) {
         try {
             String path = "C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json";

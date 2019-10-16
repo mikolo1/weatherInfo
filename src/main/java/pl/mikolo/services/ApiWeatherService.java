@@ -1,8 +1,6 @@
 package pl.mikolo.services;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -10,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.mikolo.model.weather.WeatherModel;
+import pl.mikolo.model.weatherForecast.WeatherForecastModel;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -18,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class ApiWeatherService {
+public class ApiWeatherService implements IApiWeatherService {
 
     private RestTemplate restTemplate;
     @Value("${api.key}")
@@ -26,6 +25,10 @@ public class ApiWeatherService {
 
     @Value("${api.weather.url}")
     private String url;
+
+    @Value("${api.weatherForecast.url}")
+    private String forecastUrl;
+
     private Map<Long, WeatherModel> weatherDataMap;
 
     @Autowired
@@ -52,10 +55,25 @@ public class ApiWeatherService {
         }
     }
 
+    @Override
+    public WeatherForecastModel getForecastWeather(long id) {
+            WeatherForecastModel weatherForecastModel = getWeatherForecastModel(id);
+            log.info("Rekord prognozy załadowany z API, godzina załadowania: {}, pierwsza z listy temperatura: {} ", weatherForecastModel.getUploadDateTime(), weatherForecastModel.getList().stream().map(a->a.getMain().getTemp()).findFirst());
+            return weatherForecastModel;
+    }
+
     private WeatherModel getWeatherModel(long id) {
         String fullUrl = url.replace("{id}", String.valueOf(id)).replace("{appId}", apiKey);
         ResponseEntity<WeatherModel> weatherEntity = restTemplate.exchange(fullUrl, HttpMethod.GET, null, WeatherModel.class);
         WeatherModel wm = weatherEntity.getBody();
+        wm.setUploadDateTime(LocalDateTime.now());
+        return wm;
+    }
+
+    private WeatherForecastModel getWeatherForecastModel(long id) {
+        String fullUrl = forecastUrl.replace("{id}", String.valueOf(id)).replace("{appId}", apiKey);
+        ResponseEntity<WeatherForecastModel> weatherForecastEntity = restTemplate.exchange(fullUrl, HttpMethod.GET, null, WeatherForecastModel.class);
+        WeatherForecastModel wm = weatherForecastEntity.getBody();
         wm.setUploadDateTime(LocalDateTime.now());
         return wm;
     }

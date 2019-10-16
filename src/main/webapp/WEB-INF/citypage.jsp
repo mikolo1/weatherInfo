@@ -42,11 +42,28 @@
         </table>
         <div class="buttondiv">
             <button class="btn btn-success" type="button"
-                    onclick="window.location.href='${pageContext.request.contextPath}/weatherservice'">Back to search page
+                    onclick="window.location.href='${pageContext.request.contextPath}/weatherservice'">Back to search
+                page
             </button>
         </div>
+
+        <table class="forecastTableDiv">
+            <tr>
+                <th colspan="2">Weather forecast</th>
+            </tr>
+            <tr>
+                <th>Date and time:</th>
+                <th>Temperature forecast:</th>
+            </tr>
+            <c:forEach var="forecastList" items="${forecastList}">
+            <tr>
+                <td>${fn:substring(forecastList.dtTxt, 0, 16)}</td>
+                <td>${forecastList.main.temp} °C</td>
+            <tr>
+                </c:forEach>
+        </table>
     </div>
- </div>
+</div>
 
 
 <script src="webjars/jquery/3.3.1/jquery.min.js"></script>

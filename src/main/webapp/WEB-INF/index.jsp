@@ -16,9 +16,8 @@
 <div class="formedit" style="width: 500px">
     <form method="post" action="/findtemp">
         <div class="input-group">
-            <%--            <label for="city">Search City:</label>--%>
             <input type="search" class="form-control width100" id="city" name="city"
-                   placeholder="Enter city name to search"
+                   placeholder="Enter location name to search"
                    autofocus="autofocus">
             <span class="input-group-btn">
                 <button style="margin-left: 30px;" class="btn btn-success" type="submit">Search</button>

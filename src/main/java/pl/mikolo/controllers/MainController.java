@@ -6,24 +6,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.mikolo.model.city.City;
 import pl.mikolo.model.weather.WeatherModel;
-import pl.mikolo.services.ApiWeatherService;
-import pl.mikolo.services.CityService;
+import pl.mikolo.model.weatherForecast.WeatherForecastModel;
+import pl.mikolo.services.IApiWeatherService;
+import pl.mikolo.services.ICityService;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
-@RequestMapping("/")
 @Controller
 public class MainController {
 
-    private CityService cityService;
-    private ApiWeatherService apiWeatherService;
+    private ICityService cityService;
+    private IApiWeatherService apiWeatherService;
 
     @Autowired
-    public MainController(CityService cityService, ApiWeatherService apiWeatherService) {
+    public MainController(ICityService cityService, IApiWeatherService apiWeatherService) {
         this.cityService = cityService;
         this.apiWeatherService = apiWeatherService;
     }
@@ -31,21 +31,19 @@ public class MainController {
 
     @GetMapping(value = {"/", "/weatherservice"})
     public String getMainPage(Model model) {
-//        model.addAttribute("hello", "hello");
         return "index";
     }
 
     @PostMapping(value = "/findtemp")
     public String cityTable(@RequestParam String city, Model model) {
-        if(StringUtils.isEmptyOrWhitespaceOnly(city)){
+        if (StringUtils.isEmptyOrWhitespaceOnly(city)) {
             model.addAttribute("text", "empty");
             return "index";
         }
         List<City> searchedCities = cityService.findListByName(city);
-        if(searchedCities.size()>0){
+        if (searchedCities.size() > 0) {
             model.addAttribute("cityList", searchedCities);
-            model.addAttribute("temp", 17.5);
-        }else {
+        } else {
             model.addAttribute("notfound", "Location not found in weather service.");
         }
         model.addAttribute("chosenCity", city);
@@ -54,9 +52,11 @@ public class MainController {
     }
 
     @GetMapping("/showtemp")
-    public String showCityPage(@RequestParam("cityid") final Long id, Model model){
+    public String showCityPage(@RequestParam("cityid") final Long id, Model model) {
         City city = cityService.findById(id);
         WeatherModel weatherModel = apiWeatherService.getActualWeather(id);
+        WeatherForecastModel weatherForecastModel = apiWeatherService.getForecastWeather(id);
+        model.addAttribute("forecastList", weatherForecastModel.getList());
         Double temperature = weatherModel.getMain().getTemp();
         model.addAttribute("temperature", temperature);
         model.addAttribute("city", city);

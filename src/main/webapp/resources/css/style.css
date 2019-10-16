@@ -26,9 +26,32 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+.cityTable tr td a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.cityTable tr:hover{
+    background-color: cadetblue;
+}
 .cityTableDiv{
     margin-left: auto;
     margin-right: auto;
+}
+
+.forecastTableDiv{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.forecastTableDiv th, td{
+    padding-left: 8px;
+    padding-right: 8px;
 }
 .chosenCity{
     margin-bottom: 20px;
@@ -44,8 +67,4 @@ table, th, td{
 
 .notFound{
     color: crimson;
-}
-a, a:hover{
-    text-decoration: none;
-    color: darkblue;
 }
