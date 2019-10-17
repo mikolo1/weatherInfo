@@ -51,11 +51,13 @@ public class MainController {
     }
 
     @GetMapping("/showtemp")
-    public String showCityPage(@RequestParam("cityid") final Long id, Model model) {
+    public String showCityPage(@RequestParam("cityid") final Long id, @RequestParam("forecast") boolean showForecast, Model model) {
         City city = cityService.findById(id);
         WeatherModel weatherModel = apiWeatherService.getActualWeather(id);
-        WeatherForecastModel weatherForecastModel = apiWeatherService.getForecastWeather(id);
-        model.addAttribute("forecastList", weatherForecastModel.getList());
+        if(showForecast){
+            WeatherForecastModel weatherForecastModel = apiWeatherService.getForecastWeather(id);
+            model.addAttribute("forecastList", weatherForecastModel.getList());
+        }
         Double temperature = weatherModel.getMain().getTemp();
         model.addAttribute("temperature", temperature);
         model.addAttribute("city", city);

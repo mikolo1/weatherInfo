@@ -45,23 +45,36 @@
                     onclick="window.location.href='${pageContext.request.contextPath}/weatherservice'">Back to search
                 page
             </button>
+            <c:if test="${param.forecast == false}">
+                <button class="btn btn-primary" type="button"
+                        onclick="window.location.href='${pageContext.request.contextPath}/showtemp?cityid=${city.id}&forecast=true'">
+                    Show forecast
+                </button>
+            </c:if>
+            <c:if test="${param.forecast == true}">
+                <button class="btn btn-secondary" type="button"
+                        onclick="window.location.href='${pageContext.request.contextPath}/showtemp?cityid=${city.id}&forecast=false'">
+                    Hide forecast
+                </button>
+            </c:if>
         </div>
-
-        <table class="forecastTableDiv">
-            <tr>
-                <th colspan="2">Weather forecast</th>
-            </tr>
-            <tr>
-                <th>Date and time:</th>
-                <th>Temperature forecast:</th>
-            </tr>
-            <c:forEach var="forecastList" items="${forecastList}">
-            <tr>
-                <td>${fn:substring(forecastList.dtTxt, 0, 16)}</td>
-                <td>${forecastList.main.temp} °C</td>
-            <tr>
-                </c:forEach>
-        </table>
+        <c:if test="${param.forecast == true}">
+            <table class="forecastTableDiv">
+                <tr class="tableHead">
+                    <th colspan="2">Weather forecast</th>
+                </tr>
+                <tr class="tableHead">
+                    <th>Date and time:</th>
+                    <th>Temperature forecast:</th>
+                </tr>
+                <c:forEach var="forecastList" items="${forecastList}">
+                <tr>
+                    <td>${fn:substring(forecastList.dtTxt, 0, 16)}</td>
+                    <td>${forecastList.main.temp} °C</td>
+                <tr>
+                    </c:forEach>
+            </table>
+        </c:if>
     </div>
 </div>
 

@@ -58,7 +58,7 @@ public class ApiWeatherService implements IApiWeatherService {
     @Override
     public WeatherForecastModel getForecastWeather(long id) {
             WeatherForecastModel weatherForecastModel = getWeatherForecastModel(id);
-            log.info("Rekord prognozy załadowany z API, godzina załadowania: {}, pierwsza z listy temperatura: {} ", weatherForecastModel.getUploadDateTime(), weatherForecastModel.getList().stream().map(a->a.getMain().getTemp()).findFirst());
+            log.info("Rekord prognozy załadowany, godzina załadowania: {}, pierwsza z listy temperatura: {} ", weatherForecastModel.getUploadDateTime(), weatherForecastModel.getList().stream().map(a->a.getMain().getTemp()).findFirst());
             return weatherForecastModel;
     }
 
