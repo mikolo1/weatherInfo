@@ -56,9 +56,9 @@
                 </tr>
                 <c:forEach var="city" items="${cityList}">
                     <tr>
-                        <td><a href="${pageContext.request.contextPath}/showtemp?cityid=${city.id}&forecast=false">${counter}</a></td>
-                        <td><a href="${pageContext.request.contextPath}/showtemp?cityid=${city.id}&forecast=false">${city.name}</a></td>
-                        <td><a href="${pageContext.request.contextPath}/showtemp?cityid=${city.id}&forecast=false">${city.country}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/showtemp?cityid=${city.id}">${counter}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/showtemp?cityid=${city.id}">${city.name}</a></td>
+                        <td><a href="${pageContext.request.contextPath}/showtemp?cityid=${city.id}">${city.country}</a></td>
                     </tr>
                     <c:set var="counter" value="${counter+1}"/>
                 </c:forEach>

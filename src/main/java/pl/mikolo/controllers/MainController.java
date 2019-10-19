@@ -51,7 +51,7 @@ public class MainController {
     }
 
     @GetMapping("/showtemp")
-    public String showCityPage(@RequestParam("cityid") final Long id, @RequestParam("forecast") boolean showForecast, Model model) {
+    public String showCityPage(@RequestParam("cityid") final Long id, @RequestParam(name = "forecast", required = false) boolean showForecast, Model model) {
         City city = cityService.findById(id);
         WeatherModel weatherModel = apiWeatherService.getActualWeather(id);
         if(showForecast){

@@ -45,7 +45,7 @@
                     onclick="window.location.href='${pageContext.request.contextPath}/weatherservice'">Back to search
                 page
             </button>
-            <c:if test="${param.forecast == false}">
+            <c:if test="${param.forecast == null}">
                 <button class="btn btn-primary" type="button"
                         onclick="window.location.href='${pageContext.request.contextPath}/showtemp?cityid=${city.id}&forecast=true'">
                     Show forecast
@@ -53,7 +53,7 @@
             </c:if>
             <c:if test="${param.forecast == true}">
                 <button class="btn btn-secondary" type="button"
-                        onclick="window.location.href='${pageContext.request.contextPath}/showtemp?cityid=${city.id}&forecast=false'">
+                        onclick="window.location.href='${pageContext.request.contextPath}/showtemp?cityid=${city.id}'">
                     Hide forecast
                 </button>
             </c:if>
