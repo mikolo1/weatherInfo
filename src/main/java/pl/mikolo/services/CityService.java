@@ -55,8 +55,8 @@ public class CityService implements ICityService{
     @Override
     public List<City> findPageByName(String cityName, long page, long rowsOnPage) {
         try {
-            String path = "C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json";
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
+            InputStream weatherJson = resourceLoader.getResource("classpath:/city.list.json").getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(weatherJson, StandardCharsets.UTF_8));
             List<City> cityList = gson.fromJson(reader, type);
             return cityList.stream()
                     .filter(c -> c.getName().toLowerCase().contains(cityName.toLowerCase()))
@@ -65,6 +65,8 @@ public class CityService implements ICityService{
                     .collect(Collectors.toList());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         throw new NoResultException("brak miasta w pliku");
     }
@@ -72,12 +74,13 @@ public class CityService implements ICityService{
     @Override
     public City findById(Long id) {
         try {
-            String path = "C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json";
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
-//            FileReader fileReader = new FileReader("C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json");
+            InputStream weatherJson = resourceLoader.getResource("classpath:/city.list.json").getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(weatherJson, StandardCharsets.UTF_8));
             List<City> cityList = gson.fromJson(reader, type);
             return cityList.stream().filter(c -> id == c.getId()).findFirst().get();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         throw new NoResultException("brak miasta w pliku");

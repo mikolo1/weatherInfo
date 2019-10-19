@@ -72,8 +72,10 @@ public class ApiWeatherService implements IApiWeatherService {
 
     private WeatherForecastModel getWeatherForecastModel(long id) {
         String fullUrl = forecastUrl.replace("{id}", String.valueOf(id)).replace("{appId}", apiKey);
-        ResponseEntity<WeatherForecastModel> weatherForecastEntity = restTemplate.exchange(fullUrl, HttpMethod.GET, null, WeatherForecastModel.class);
-        WeatherForecastModel wm = weatherForecastEntity.getBody();
+//        ResponseEntity<WeatherForecastModel> weatherForecastEntity = restTemplate.exchange(fullUrl, HttpMethod.GET, null, WeatherForecastModel.class);
+//        WeatherForecastModel wm1 = restTemplate.getForObject(fullUrl, WeatherForecastModel.class);
+        ResponseEntity<WeatherForecastModel> response = restTemplate.getForEntity(fullUrl, WeatherForecastModel.class);
+        WeatherForecastModel wm = response.getBody();
         wm.setUploadDateTime(LocalDateTime.now());
         return wm;
     }

@@ -37,7 +37,7 @@
                 <td>${city.country}</td>
                 <td>${city.coord.lat}</td>
                 <td>${city.coord.lon}</td>
-                <td>${temperature}</td>
+                <td>${temperature} °C</td>
             </tr>
         </table>
         <div class="buttondiv">
