@@ -10,30 +10,30 @@ public class List {
 
     @SerializedName("dt")
     @Expose
-    public Integer dt;
+    private Integer dt;
     @SerializedName("main")
     @Expose
-    public Main main;
+    private Main main;
     @SerializedName("weather")
     @Expose
-    public java.util.List<Weather> weather = null;
+    private java.util.List<Weather> weather = null;
     @SerializedName("clouds")
     @Expose
-    public Clouds clouds;
+    private Clouds clouds;
     @SerializedName("wind")
     @Expose
-    public Wind wind;
+    private Wind wind;
     @SerializedName("sys")
     @Expose
-    public Sys sys;
+    private Sys sys;
     @SerializedName("dt_txt")
     @Expose
-    public String dtTxt;
+    private String dtTxt;
     @SerializedName("snow")
     @Expose
-    public Snow snow;
+    private Snow snow;
     @SerializedName("rain")
     @Expose
-    public Rain rain;
+    private Rain rain;
 
 }

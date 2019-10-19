@@ -10,24 +10,24 @@ public class City {
 
     @SerializedName("id")
     @Expose
-    public Integer id;
+    private Integer id;
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
     @SerializedName("coord")
     @Expose
-    public Coord coord;
+    private Coord coord;
     @SerializedName("country")
     @Expose
-    public String country;
+    private String country;
     @SerializedName("timezone")
     @Expose
-    public Integer timezone;
+    private Integer timezone;
     @SerializedName("sunrise")
     @Expose
-    public Integer sunrise;
+    private Integer sunrise;
     @SerializedName("sunset")
     @Expose
-    public Integer sunset;
+    private Integer sunset;
 
 }

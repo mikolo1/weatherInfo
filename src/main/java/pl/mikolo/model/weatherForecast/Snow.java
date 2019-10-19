@@ -10,6 +10,6 @@ public class Snow {
 
     @SerializedName("3h")
     @Expose
-    public Double _3h;
+    private Double _3h;
 
 }

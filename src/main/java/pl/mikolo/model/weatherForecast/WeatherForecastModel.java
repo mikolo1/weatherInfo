@@ -12,19 +12,19 @@ public class WeatherForecastModel {
 
     @SerializedName("cod")
     @Expose
-    public String cod;
+    private String cod;
     @SerializedName("message")
     @Expose
-    public Integer message;
+    private Double message;
     @SerializedName("cnt")
     @Expose
-    public Integer cnt;
+    private Integer cnt;
     @SerializedName("list")
     @Expose
-    public java.util.List<pl.mikolo.model.weatherForecast.List> list = null;
+    private java.util.List<pl.mikolo.model.weatherForecast.List> list = null;
     @SerializedName("city")
     @Expose
-    public City city;
+    private City city;
 
     private LocalDateTime uploadDateTime;
 }

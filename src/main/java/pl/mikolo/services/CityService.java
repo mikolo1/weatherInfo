@@ -35,16 +35,18 @@ public class CityService implements ICityService{
     @Override
     public List<City> findListByName(String cityName) {
         try {
-            String path = "C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json";
-//            InputStream weatherJson = resourceLoader.getResource("classpath:resources/city.list.json").getInputStream();
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(weatherJson, StandardCharsets.UTF_8));
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
+//            String path = "C:\\Users\\Mikołaj\\IdeaProjects\\weathertemp\\src\\main\\resources\\city.list.json";
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
+            InputStream weatherJson = resourceLoader.getResource("classpath:/city.list.json").getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(weatherJson, StandardCharsets.UTF_8));
 
             List<City> cityList = gson.fromJson(reader, type);
             return cityList.stream()
                     .filter(c -> c.getName().toLowerCase().contains(cityName.toLowerCase()))
                     .collect(Collectors.toList());
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         throw new NoResultException("brak miasta w pliku");

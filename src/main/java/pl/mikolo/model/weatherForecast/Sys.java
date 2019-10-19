@@ -10,6 +10,6 @@ public class Sys {
 
     @SerializedName("pod")
     @Expose
-    public String pod;
+    private String pod;
 
 }
