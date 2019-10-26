@@ -22,7 +22,7 @@ public class LoggingAspect {
         Long id = (Long) joinPoint.getArgs()[0];
 
         Object o = joinPoint.proceed();
-        log.info("Execution time: " + (System.nanoTime() - startTime) + " for city: " + id);
+        log.info("Execution time: " + (System.nanoTime() - startTime) + " for id: " + id);
         return o;
     }
 
