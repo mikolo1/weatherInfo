@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.mikolo.annotations.ExecutionTimeLog;
 import pl.mikolo.model.weather.WeatherModel;
 import pl.mikolo.model.weatherForecast.WeatherForecastModel;
 
@@ -37,6 +38,7 @@ public class ApiWeatherService implements IApiWeatherService {
         this.weatherDataMap = new HashMap<>();
     }
 
+    @ExecutionTimeLog
     public WeatherModel getActualWeather(long id) {
         Optional<WeatherModel> inMemoryData = weatherDataMap
                 .entrySet()
@@ -50,7 +52,7 @@ public class ApiWeatherService implements IApiWeatherService {
         } else {
             WeatherModel weatherModel = getWeatherModel(id);
             weatherDataMap.put(id, weatherModel);
-            log.info("Rekord załadowany z API, czasa załadowania: {}, temperatura: {} ", weatherModel.getUploadDateTime(), weatherModel.getMain().getTemp());
+            log.info("Rekord załadowany z API, czas załadowania: {}, temperatura: {} ", weatherModel.getUploadDateTime(), weatherModel.getMain().getTemp());
             return weatherModel;
         }
     }
